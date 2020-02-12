@@ -1,0 +1,87 @@
+create table branch
+(  
+   branchname varchar2(30),
+   branchcity varchar2(25),
+   assets number(12,2),
+   primary key(branchname)
+   
+
+
+
+
+);
+create table account
+(  accno number(10),
+   branchname varchar2(30),
+   
+   balance number(10,2),
+   primary key(accno),
+   foreign key(branchname) references branch(branchname) 
+   
+
+
+
+
+);
+drop table account;
+create table customer
+(
+  customer_name VARCHAR2(30),
+  customer_street varchar2(45),
+  city VARCHAR2(15),
+  primary key(customer_name)
+
+
+
+);
+CREATE table depositor
+(
+   customer_name VARCHAR2(30),
+    accno number(10),
+    primary key(customer_name,accno),
+    foreign key(customer_name) references customer(customer_name),
+    foreign key(accno) references account(accno)
+
+);
+create table loan
+(
+  loannumber number(12),
+  branchname varchar2(30),
+  amount number(10,2),
+  primary key(loannumber),
+  foreign key(branchname) references branch(branchname)
+  
+
+
+
+);
+create table borrower
+(
+   customer_name VARCHAR2(30),
+   loannumber number(12),
+   primary key(customer_name),
+   foreign key(customer_name) references customer(customer_name),
+   foreign key(loannumber) references loan(loannumber)
+
+);
+insert into branch values('BRANCH5','CITY5',250000050.45);
+select * FROM branch;
+insert into account values(10060,'BRANCH5',130400.45);
+commit;
+select * FROM branch;
+select * FROM account;
+insert into customer values('RAGHAV','street7','CITY5');
+commit;
+select * from customer;
+insert into depositor values('RAGHAV',10060);
+commit;
+select * from depositor;
+insert into loan values(100000,'BRANCH1',220000);
+insert into loan values(100020,'BRANCH2',320000);
+insert into loan values(100040,'BRANCH3',100000);
+commit;
+select * from loan;
+select* from depositor;
+insert into borrower values('MAYA',100040);
+commit;
+select * from borrower;
